@@ -17,16 +17,17 @@ public class MathsParser {
         if (string.isEmpty()) {
             return null;
         }
-        char chr = string.charAt(0);
-        if (chr == '{') {
-            int j = findClosing(string, '{');
-            return parseMathsSet(string.substring(1, j));
-        }
-        if (chr == '}') {
-            int j = findClosing(string, ')');
-            return parseOrderedPair(string.substring(1, j));
-        }
-        return new NaturalNumber(Integer.parseInt(string));
+        return switch (string.charAt(0)) {
+            case '{' -> {
+                int j = findClosing(string, '{');
+                yield parseMathsSet(string.substring(1, j));
+            }
+            case '(' -> {
+                int j = findClosing(string, ')');
+                yield parseOrderedPair(string.substring(1, j));
+            }
+            default -> new NaturalNumber(Integer.parseInt(string));
+        };
     }
 
     private static MathsSet parseMathsSet(String string) {

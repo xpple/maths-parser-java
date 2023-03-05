@@ -9,7 +9,7 @@ public record NaturalNumber(int naturalNumber) implements MathsObject {
             return new MathsSet(new ArrayList<>());
         }
         MathsSet predecessor = new NaturalNumber(this.naturalNumber - 1).toMathsSet();
-        predecessor.elements().add(predecessor);
+        predecessor.elements().add(new MathsSet(new ArrayList<>(predecessor.elements())));
         return predecessor;
     }
 
